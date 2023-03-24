@@ -1,5 +1,5 @@
-﻿using Entities.Abstract;
-using Entities.Concrete;
+﻿using Core.Entities;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +13,8 @@ namespace DataAccess.Abstract
     {
         List<T> GetAll(Expression<Func<T,bool>> filter=null);
         T Get(Expression<Func<T, bool>> filter);
-        void Add(Car car);
-        void Update(Car car);
-        void Delete(Car car);
+        void Add(T entity);
+        void Update(T entity);
+        void Delete(T entity);
     }
 }

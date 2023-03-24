@@ -10,8 +10,8 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Concrete.EntitiyFramework
 {
-    public class EfBrandDal : EfEntityRepositoryBase<Brand, ReCapContext>, IBrandDal
+    public class EfColorDal :EfEntityRepositoryBase<Color,ReCapContext>, IColorDal
     {
-        
+      
     }
 }
