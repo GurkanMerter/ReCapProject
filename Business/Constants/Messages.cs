@@ -10,5 +10,6 @@ namespace Business.Constants
     {
         public static string CarAdded = "Araç başarıyla eklendi";
         public static string CarAddingDenied = "Araç ismini veya Günlük Fiyatlandırmasını kontrol ediniz.";
+        public static string CarRentingDenied = "Araç şu anda kullanım halindedir";
     }
 }
