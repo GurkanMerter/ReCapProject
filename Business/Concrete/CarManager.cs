@@ -1,5 +1,8 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
+using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntitiyFramework;
@@ -22,18 +25,14 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
+        [ValidationAspect(typeof(CarValidatior))]
         public IResult Add(Car car)
         {
-            if(car.Description.Length>=2 && car.DailyPrice > 0)
-            {
-                _carDal.Add(car);
 
-                return new SuccessResult(Messages.CarAdded);
-            }
-            else
-            {
-                return new ErrorResult(Messages.CarAddingDenied);
-            }
+            _carDal.Add(car);
+
+            return new SuccessResult(Messages.CarAdded);
+
         }
 
         public IResult Delete(Car car)
@@ -50,7 +49,7 @@ namespace Business.Concrete
 
         public IDataResult<Car> GetById(int id)
         {
-            return new SuccessDataResult<Car>(_carDal.Get(a=>a.Id == id));
+            return new SuccessDataResult<Car>(_carDal.Get(a => a.Id == id));
         }
 
         public IDataResult<List<CarDetailDto>> GetCarDetails()
@@ -67,16 +66,16 @@ namespace Business.Concrete
 
         public IDataResult<List<Car>> GetByBrandId(int brandId)
         {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(a=>a.BrandId == brandId));
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(a => a.BrandId == brandId));
         }
 
-       
+
 
         public IDataResult<List<Car>> GetByColorId(int colorId)
         {
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(a => a.ColorId == colorId));
         }
 
-        
+
     }
 }
