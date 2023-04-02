@@ -3,6 +3,7 @@ using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntitiyFramework;
@@ -19,15 +20,23 @@ namespace Business.Concrete
     public class CarManager : ICarService
     {
         ICarDal _carDal;
+        IColorService _colorService;
 
-        public CarManager(ICarDal carDal)
+        public CarManager(ICarDal carDal,IColorService colorService)
         {
             _carDal = carDal;
+            _colorService = colorService;
         }
 
         [ValidationAspect(typeof(CarValidatior))]
         public IResult Add(Car car)
         {
+            IResult result = BusinessRules.Run(CheckIfCarColorRed(car.ColorId));
+
+            if(result !=null)
+            {
+                return result;
+            }
 
             _carDal.Add(car);
 
@@ -76,6 +85,18 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(a => a.ColorId == colorId));
         }
 
+        //Business Rules here
+
+        public IResult CheckIfCarColorRed(int colorId)
+        {
+            var result = _colorService.GetById(colorId);
+
+            if (result.Data.Id == 4)
+            {
+                return new ErrorResult(Messages.CarColorDenied);
+            }
+            return new SuccessResult();
+        }
 
     }
 }

@@ -11,5 +11,7 @@ namespace Business.Constants
         public static string CarAdded = "Araç başarıyla eklendi";
         public static string CarAddingDenied = "Araç ismini veya Günlük Fiyatlandırmasını kontrol ediniz.";
         public static string CarRentingDenied = "Araç şu anda kullanım halindedir";
+        internal static string CarColorDenied = "Girmiş olduğunuz renk kullanılmamaktadır";
+        internal static string CarImageLimitReached = "İlgili araç için maksimum fotoğraf sayısına eriştiniz";
     }
 }
